@@ -1,0 +1,451 @@
+{
+  "node": [
+    {
+      "input": [
+        "input"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": true
+        },
+        "group": {
+          "i": "1"
+        },
+        "_output_shapes": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "32"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "7",
+              "7",
+              "1",
+              "32"
+            ]
+          }
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "dilations": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        }
+      },
+      "op": "Conv",
+      "name": "HardNetnSequentialnfeaturesnnConv2dn0n7"
+    },
+    {
+      "input": [
+        "HardNetnSequentialnfeaturesnnConv2dn0n7"
+      ],
+      "attr": {
+        "_output_shapes": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "32"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "op": "Tanh",
+      "name": "HardNetnSequentialnfeaturesnnTanhn1n8"
+    },
+    {
+      "input": [
+        "HardNetnSequentialnfeaturesnnTanhn1n8"
+      ],
+      "attr": {
+        "_output_shapes": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "32"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "pooling_type": {
+          "s": "TUFY"
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "dilations": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        }
+      },
+      "op": "Pool",
+      "name": "HardNetnSequentialnfeaturesnnMaxPool2dn2n9"
+    },
+    {
+      "input": [
+        "HardNetnSequentialnfeaturesnnMaxPool2dn2n9"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": true
+        },
+        "group": {
+          "i": "1"
+        },
+        "_output_shapes": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "8"
+                  },
+                  {
+                    "size": "8"
+                  },
+                  {
+                    "size": "64"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "6",
+              "6",
+              "32",
+              "64"
+            ]
+          }
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "dilations": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        }
+      },
+      "op": "Conv",
+      "name": "HardNetnSequentialnfeaturesnnConv2dn3n10"
+    },
+    {
+      "input": [
+        "HardNetnSequentialnfeaturesnnConv2dn3n10"
+      ],
+      "attr": {
+        "_output_shapes": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "8"
+                  },
+                  {
+                    "size": "8"
+                  },
+                  {
+                    "size": "64"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "op": "Tanh",
+      "name": "HardNetnSequentialnfeaturesnnTanhn4n11"
+    },
+    {
+      "input": [
+        "HardNetnSequentialnfeaturesnnTanhn4n11"
+      ],
+      "attr": {
+        "_output_shapes": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "1"
+                  },
+                  {
+                    "size": "1"
+                  },
+                  {
+                    "size": "4096"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "op": "Flatten",
+      "name": "HardNet12"
+    },
+    {
+      "input": [
+        "HardNet12"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": true
+        },
+        "_output_shapes": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "1"
+                  },
+                  {
+                    "size": "1"
+                  },
+                  {
+                    "size": "128"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "units": {
+          "i": "128"
+        }
+      },
+      "op": "FullyConnected",
+      "name": "HardNetnSequentialnclassifiernnLinearn0n13"
+    },
+    {
+      "input": [
+        "HardNetnSequentialnclassifiernnLinearn0n13"
+      ],
+      "attr": {
+        "_output_shapes": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "1"
+                  },
+                  {
+                    "size": "1"
+                  },
+                  {
+                    "size": "128"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "op": "Tanh",
+      "name": "HardNetnSequentialnclassifiernnTanhn1n14"
+    },
+    {
+      "attr": {
+        "_output_shapes": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "32"
+                  },
+                  {
+                    "size": "32"
+                  },
+                  {
+                    "size": "1"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "-1"
+              },
+              {
+                "size": "32"
+              },
+              {
+                "size": "32"
+              },
+              {
+                "size": "1"
+              }
+            ]
+          }
+        }
+      },
+      "op": "DataInput",
+      "name": "input"
+    }
+  ]
+}

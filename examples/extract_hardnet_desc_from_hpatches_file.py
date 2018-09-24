@@ -37,30 +37,16 @@ class HardNet(nn.Module):
         super(HardNet, self).__init__()
 
         self.features = nn.Sequential(
-            nn.Conv2d(1, 32, kernel_size=3, padding=1, bias = False),
-            nn.BatchNorm2d(32, affine=False),
-            nn.ReLU(),
-            nn.Conv2d(32, 32, kernel_size=3, padding=1, bias = False),
-            nn.BatchNorm2d(32, affine=False),
-            nn.ReLU(),
-            nn.Conv2d(32, 64, kernel_size=3, stride=2, padding=1, bias = False),
-            nn.BatchNorm2d(64, affine=False),
-            nn.ReLU(),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1, bias = False),
-            nn.BatchNorm2d(64, affine=False),
-            nn.ReLU(),
-            nn.Conv2d(64, 128, kernel_size=3, stride=2,padding=1, bias = False),
-            nn.BatchNorm2d(128, affine=False),
-            nn.ReLU(),
-            nn.Conv2d(128, 128, kernel_size=3, padding=1, bias = False),
-            nn.BatchNorm2d(128, affine=False),
-            nn.ReLU(),
-            nn.Dropout(0.1),
-            nn.Conv2d(128, 128, kernel_size=8, bias = False),
-            nn.BatchNorm2d(128, affine=False),
-
+            nn.Conv2d(1, 32, kernel_size=7),
+            nn.Tanh(),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(32, 64, kernel_size=6),
+            nn.Tanh(),
         )
-        #self.features.apply(weights_init)
+        self.classifier = nn.Sequential(
+            nn.Linear(64 * 8 * 8, 128),
+            nn.Tanh()
+        )
 
     def input_norm(self,x):
         flat = x.view(x.size(0), -1)
@@ -71,6 +57,7 @@ class HardNet(nn.Module):
     def forward(self, input):
         x_features = self.features(self.input_norm(input))
         x = x_features.view(x_features.size(0), -1)
+        x = self.classifier(x)
         return L2Norm()(x)
     
 
@@ -84,10 +71,14 @@ if __name__ == '__main__':
     except:
           print("Wrong input format. Try ./extract_hardnet_desc_from_hpatches_file.py imgs/ref.png out.txt gpu")
           sys.exit(1)
-    model_weights = '../pretrained/train_liberty_with_aug/checkpoint_liberty_with_aug.pth'
+    #model_weights = '../pretrained/train_liberty_with_aug/checkpoint_liberty_with_aug.pth'
+    #model_weights='/home/kangrong/HardNet/hardnet/code/data/models/withoutpool/liberty_train_withoutpool/_liberty_min_as_fliprot/checkpoint_8.pth'
+    #model_weights='/home/kangrong/HardNet/hardnet/code/data/models/tfeat_whole/liberty_train_tfeat_whole/_liberty_min_as_fliprot/checkpoint_0.pth'
+    model_weights='/unsullied/sharefs/kangrong/home/hardnet/data/models/model_HPatches_HardTFeat_a_lr01_trimar/all_min_as/checkpoint_8.pth'
     model = HardNet()
-    checkpoint = torch.load(model_weights)
+    checkpoint = torch.load(model_weights,map_location='cpu')
     model.load_state_dict(checkpoint['state_dict'])
+    #model=torch.load(model_weights)
     model.eval()
     if DO_CUDA:
         model.cuda()

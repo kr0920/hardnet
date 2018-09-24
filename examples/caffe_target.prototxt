@@ -1,0 +1,87 @@
+layer {
+  name: "input"
+  type: "Input"
+  top: "input"
+  input_param {
+    shape {
+      dim: 1
+      dim: 1
+      dim: 32
+      dim: 32
+    }
+  }
+}
+layer {
+  name: "HardNetnSequentialnfeaturesnnConv2dn0n7"
+  type: "Convolution"
+  bottom: "input"
+  top: "HardNetnSequentialnfeaturesnnConv2dn0n7"
+  convolution_param {
+    num_output: 32
+    bias_term: true
+    group: 1
+    stride: 1
+    pad_h: 0
+    pad_w: 0
+    kernel_h: 7
+    kernel_w: 7
+  }
+}
+layer {
+  name: "HardNetnSequentialnfeaturesnnTanhn1n8"
+  type: "TanH"
+  bottom: "HardNetnSequentialnfeaturesnnConv2dn0n7"
+  top: "HardNetnSequentialnfeaturesnnTanhn1n8"
+}
+layer {
+  name: "HardNetnSequentialnfeaturesnnMaxPool2dn2n9"
+  type: "Pooling"
+  bottom: "HardNetnSequentialnfeaturesnnTanhn1n8"
+  top: "HardNetnSequentialnfeaturesnnMaxPool2dn2n9"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+    pad_h: 0
+    pad_w: 0
+  }
+}
+layer {
+  name: "HardNetnSequentialnfeaturesnnConv2dn3n10"
+  type: "Convolution"
+  bottom: "HardNetnSequentialnfeaturesnnMaxPool2dn2n9"
+  top: "HardNetnSequentialnfeaturesnnConv2dn3n10"
+  convolution_param {
+    num_output: 64
+    bias_term: true
+    group: 1
+    stride: 1
+    pad_h: 0
+    pad_w: 0
+    kernel_h: 6
+    kernel_w: 6
+  }
+}
+layer {
+  name: "HardNetnSequentialnfeaturesnnTanhn4n11"
+  type: "TanH"
+  bottom: "HardNetnSequentialnfeaturesnnConv2dn3n10"
+  top: "HardNetnSequentialnfeaturesnnTanhn4n11"
+}
+layer {
+  name: "HardNetnSequentialnclassifiernnLinearn0n13"
+  type: "InnerProduct"
+  bottom: "HardNetnSequentialnfeaturesnnTanhn4n11"
+  top: "HardNetnSequentialnclassifiernnLinearn0n13"
+  inner_product_param {
+    num_output: 128
+    bias_term: true
+  }
+}
+layer {
+  name: "HardNetnSequentialnclassifiernnTanhn1n14"
+  type: "TanH"
+  bottom: "HardNetnSequentialnclassifiernnLinearn0n13"
+  top: "HardNetnSequentialnclassifiernnTanhn1n14"
+}
+

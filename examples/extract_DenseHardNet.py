@@ -84,7 +84,7 @@ def load_grayscale_var(fname):
     return var_image_reshape
 
 if __name__ == '__main__':
-    DO_CUDA = True
+    DO_CUDA = False
     UPSCALE = False
     stride = 2;
     try:
@@ -102,7 +102,7 @@ if __name__ == '__main__':
           sys.exit(1)
     model_weights = '../pretrained/pretrained_all_datasets/HardNet++.pth'
     model = DenseHardNet(stride)
-    checkpoint = torch.load(model_weights)
+    checkpoint = torch.load(model_weights,map_location='cpu')
     model.load_state_dict(checkpoint['state_dict'])
     model.eval()
     img = load_grayscale_var(input_img_fname)
