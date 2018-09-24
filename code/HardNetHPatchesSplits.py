@@ -40,7 +40,7 @@ from Utils import L2Norm, cv2_scale, np_reshape
 from Utils import str2bool
 import torch.nn as nn
 import torch.utils.data as data
-
+#import pdb
 
 class CorrelationPenaltyLoss(nn.Module):
     def __init__(self):
@@ -69,7 +69,7 @@ parser.add_argument('--hpatches-split', type=str,
 parser.add_argument('--dataroot', type=str,
                     default='data/sets/',
                     help='path to Brown datasets for testing')
-parser.add_argument('--enable-logging', type=str2bool, default=False,
+parser.add_argument('--enable-logging', type=str2bool, default=True,
                     help='output to tensorlogger')
 parser.add_argument('--log-dir', default='data/logs/',
                     help='folder to output log')
@@ -168,8 +168,8 @@ if os.path.isdir(args.w1bsroot):
 # order to prevent any memory allocation on unused GPUs
 os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu_id
 
-args.cuda = not args.no_cuda and torch.cuda.is_available()
-
+#args.cuda = not args.no_cuda and torch.cuda.is_available()
+args.cuda=torch.cuda.is_available()
 if args.cuda:
     cudnn.benchmark = True
     torch.cuda.manual_seed_all(args.seed)
@@ -217,9 +217,9 @@ class TotalDatasetsLoader(data.Dataset):
                         inds[ind] = []
                     inds[ind].append(idx)
                 return inds
-
+            #pdb.set_trace() 
             triplets = []
-            indices = create_indices(labels)
+            indices = create_indices(labels.numpy())
             unique_labels = np.unique(labels.numpy())
             n_classes = unique_labels.shape[0]
             # add only unique indices in batch
@@ -497,6 +497,7 @@ def train(train_loader, model, optimizer, epoch, logger, load_triplets=False):
         else:
             data_a, data_p = data
 
+        print(args.cuda)
         if args.cuda:
             data_a, data_p = data_a.cuda(), data_p.cuda()
             data_a, data_p = Variable(data_a), Variable(data_p)
@@ -539,8 +540,8 @@ def train(train_loader, model, optimizer, epoch, logger, load_triplets=False):
                     epoch, batch_idx * len(data_a), len(train_loader.dataset),
                            100. * batch_idx / len(train_loader),
                     loss.data[0]))
-    if (args.enable_logging):
-        logger.log_value('loss', loss.data[0]).step()
+        if (args.enable_logging):
+            logger.log_value('loss', loss.data[0]).step()
     try:
         os.stat('{}{}'.format(args.model_dir, suffix))
     except:
@@ -692,6 +693,7 @@ def main(train_loader, test_loaders, model, logger, file_logger):
                                          descs_to_draw=[desc_name])
 
 if __name__ == '__main__':
+    print("cuda ",args.cuda)
     LOG_DIR = args.log_dir
     if not os.path.isdir(LOG_DIR):
         os.makedirs(LOG_DIR)

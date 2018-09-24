@@ -7,8 +7,8 @@ import sys
 import json
 
 types = ['e1','e2','e3','e4','e5','ref','h1','h2','h3','h4','h5', 't1', 't2', 't3', 't4', 't5']
+#types=['e1','e2','e3','e4','e5','ref']
 splits = ['a', 'b', 'c', 'view', 'illum']
-
 #images_to_exclude = ['v_adam', 'v_boat', 'v_graffiti', 'v_there','i_dome']
 
 def mean_image(patches):
@@ -47,7 +47,7 @@ class HPatches(data.Dataset):
                     patches.append(patch)
                     labels.append(i+counter)
             counter += n_patches
-        print counter
+        print (counter)
         return torch.ByteTensor(np.array(patches, dtype=np.uint8)), torch.LongTensor(labels)
 
 if __name__ == '__main__':
@@ -57,9 +57,10 @@ if __name__ == '__main__':
         path_to_splits_json = sys.argv[2]
         output_dir  = sys.argv[3]
     except:
-        print "Wrong input format. Try python HPatchesDatasetCreator.py path_to_hpatches path_to_splits_json output_dir"
+        print( "Wrong input format. Try python HPatchesDatasetCreator.py path_to_hpatches path_to_splits_json output_dir")
         sys.exit(1)
-    splits_json = json.load(open(path_to_splits_json, 'rb'))
+    splits_json = json.load(open(path_to_splits_json, 'r'))
+    #splits_json=images_to_exclude
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     for split in splits:
